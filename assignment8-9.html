@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0;
+      color: #333;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .gender-container {
+      margin-bottom: 20px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    .gender-label {
+      vertical-align: middle;
+      color: #555;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    button[type="button"] {
+      background-color: #95a5a6;
+      color: #fff;
+    }
+
+    button[type="button"]:hover {
+      background-color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registration Form</h1>
+  <form id="registrationForm">
+    <div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" required>
+      <span class="error" id="firstNameError"></span>
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" required>
+      <span class="error" id="lastNameError"></span>
+    </div>
+    <div>
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" required>
+      <span class="error" id="dobError"></span>
+    </div>
+    <div class="gender-container">
+      <label>Gender:</label>
+      <input type="radio" id="male" name="gender" value="male" required>
+      <span class="gender-label">Male</span>
+      <input type="radio" id="female" name="gender" value="female">
+      <span class="gender-label">Female</span>
+      <span class="error" id="genderError"></span>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+      <span class="error" id="passwordError"></span>
+    </div>
+    <div>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" required>
+      <span class="error" id="confirmPasswordError"></span>
+    </div>
+    <div>
+      <button type="button" id="registerBtn">Register</button>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById('registerBtn').addEventListener('click', function() {
+      validateForm();
+    });
+
+    function validateForm() {
+      clearErrors();
+
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const dob = document.getElementById('dob').value;
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (firstName === '') {
+        displayError('firstNameError', 'First name is required.');
+      }
+
+      if (lastName === '') {
+        displayError('lastNameError', 'Last name is required.');
+      }
+
+      if (dob === '') {
+        displayError('dobError', 'Date of birth is required.');
+      }
+
+      if (!gender) {
+        displayError('genderError', 'Gender is required.');
+      }
+
+      if (password === '') {
+        displayError('passwordError', 'Password is required.');
+      }
+
+      if (confirmPassword === '') {
+        displayError('confirmPasswordError', 'Confirm password is required.');
+      }
+
+      if (password !== confirmPassword) {
+        displayError('passwordError', 'Passwords do not match.');
+        displayError('confirmPasswordError', 'Passwords do not match.');
+      }
+    }
+
+    function displayError(id, message) {
+      const errorElement = document.getElementById(id);
+      errorElement.textContent = message;
+    }
+
+    function clearErrors() {
+      const errorElements = document.querySelectorAll('.error');
+      errorElements.forEach(function(element) {
+        element.textContent = '';
+      });
+    }
+  </script>
+</body>
+</html>
